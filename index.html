@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f0e3;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("giphy.gif");
+
+        }
+        .inner-container {
+            background-color: #ffb6c1;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #d40000;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.3s ease, top 0.3s ease; /* Smooth transition for position change */
+        }
+
+        .yes-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .no-btn {
+            background-color: #f44336;
+            color: white;
+            position: relative; /* Required for top/left changes */
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        /* Fireworks animation */
+        @keyframes firework1 {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(300px, -300px); opacity: 0; }
+        }
+
+        @keyframes firework2 {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(-300px, 300px); opacity: 0; }
+        }
+
+        .firework {
+            position: absolute;
+            border-radius: 50%;
+            background-color: #ffeb3b;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation: firework1 1s ease-out, firework2 1s ease-out;
+            pointer-events: none;
+        }
+
+        /* Fireworks sound (optional) */
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <h1>Will you be my Valentine?</h1>
+            <!-- Button Container -->
+            <div class="button-container">
+                <button class="button yes-btn" onmouseover="turnGreen()" onClick="answerYes()">YES!</button>
+                <button id="noButton" class="button no-btn" onmouseenter="moveNoButton()" onmouseout="resetNoButton()">NO!!</button>    
+            </div> 
+        </div>
+    </div>
+    <audio id="fireworks-sound" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
+
+    <script>
+        function answerYes() {
+            // Clear the DOM content
+            const container = document.querySelector(".container");
+            container.innerHTML = "<h1 style='font-size: 100px;'>Happy Valentine's My Love <3</h1>";
+            container.style.backgroundImage = "url('fireworks.gif')";
+            container.style.backgroundRepeat = "no-repeat";
+            container.style.backgroundSize = "cover"
+            container.style.backgroundPosition = "center"
+
+            // Optionally, play a fireworks sound
+            document.getElementById("fireworks-sound").play();
+        }
+
+        function createFireworks() {
+            for (let i = 0; i < 10; i++) {
+                const firework = document.createElement("div");
+                firework.classList.add("firework");
+                firework.style.top = `${Math.random() * window.innerHeight}px`;
+                firework.style.left = `${Math.random() * window.innerWidth}px`;
+
+                // Append the firework to the body
+                document.body.appendChild(firework);
+
+                // Remove the firework after animation
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+        }
+
+        // Move "No" button on hover
+        function moveNoButton() {
+            const noButton = document.getElementById("noButton");
+            noButton.style.transform = "translateX(150px)"; // Move the button horizontally
+            noButton.style.top = "-20px"; // Move the button vertically
+        }
+
+        // Reset the position of the "No" button when hover ends
+        function resetNoButton() {
+            const noButton = document.getElementById("noButton");
+            noButton.style.transform = "translateX(0)"; // Reset horizontal position
+            noButton.style.top = "0"; // Reset vertical position
+        }
+    </script>
+
+</body>
+</html>
